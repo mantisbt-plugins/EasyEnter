@@ -18,10 +18,12 @@ html_page_top( plugin_lang_get( 'title' ) );
 
 print_manage_menu( );
 
-# Default value, overwritten by GET-Value
-$_SESSION['selected_project_id'] = 0;
+# Default value, overwritten by GET-Value or previous set session
+if( !isset( $_SESSION[ 'selected_project_id' ] ) ) {
+	$_SESSION[ 'selected_project_id' ] = 0;
+}
 if( isset( $_GET['project_id'] ) ) {
-	$_SESSION['selected_project_id'] = (int) $_GET['project_id'];
+	$_SESSION[ 'selected_project_id' ] = (int) $_GET['project_id'];
 }
 
 
@@ -81,7 +83,7 @@ function print_select_available_fields( $name, $selected_fields ) {
 
 	#Add custom fields (if specific project is selected only the fields
 	# assigned to it)
-	$current_project_id = $_SESSION['selected_project_id'];
+	$current_project_id = $_SESSION[ 'selected_project_id' ];
 	$t_custom_fields = custom_field_get_ids();
 	$customfields_options = [];
 	foreach( $t_custom_fields as $t_field_id ) {
@@ -122,8 +124,9 @@ function print_select_available_fields( $name, $selected_fields ) {
  */
 function plugin_config_get_wpid( $p_option ) {
 	$p_project = null;
-	if( $_SESSION['selected_project_id'] == 0 ) {
-		$p_project = $_SESSION['selected_project_id'];
+	if( isset( $_SESSION[ 'selected_project_id' ] )
+		&& $_SESSION[ 'selected_project_id' ] != 0 ) {
+		$p_project = (int) $_SESSION[ 'selected_project_id' ];
 	}
 	return plugin_config_get( $p_option, null, null, null, $p_project );
 }
@@ -174,7 +177,7 @@ function issetOrDefault( $key, $array, $default = null ) {
 	</td>
 	<td class="center" width="40%">
 		<select name="project_id" id="project_id" style="width:99%">
-			<?php print_project_option_list( $_SESSION['selected_project_id'] ); ?>
+			<?php print_project_option_list( $_SESSION[ 'selected_project_id' ] ); ?>
 		</select>
 	</td>
 </tr>
@@ -184,11 +187,9 @@ function issetOrDefault( $key, $array, $default = null ) {
 		<?php echo plugin_lang_get( 'config_include_fields' )?>
 	</td>
 	<td class="center">
-		<?php
-		print_select_available_fields(
+		<?php print_select_available_fields(
 			'include_fields', plugin_config_get_wpid( 'include_fields' )
-		);
-		?>
+		); ?>
 	</td>
 </tr>
 
@@ -197,11 +198,9 @@ function issetOrDefault( $key, $array, $default = null ) {
 		<?php echo plugin_lang_get( 'config_exclude_fields' )?>
 	</td>
 	<td class="center">
-		<?php
-		print_select_available_fields(
+		<?php print_select_available_fields(
 			'exclude_fields', plugin_config_get_wpid( 'exclude_fields' )
-		);
-		?>
+		); ?>
 	</td>
 </tr>
 
@@ -214,8 +213,7 @@ function issetOrDefault( $key, $array, $default = null ) {
 			<label><input type="checkbox" name="exclude_fields[]"
 				<?php if( in_array( 'special.custom_profile', plugin_config_get_wpid( 'exclude_fields' ) ) ) {
 					echo 'checked="checked"';
-				}
-				?>
+				} ?>
 				style="margin-bottom:2.1ex;float:left"
 				value="special.custom_profile"><?php echo plugin_lang_get( 'config_exclude_special_profileinput' ) ?></label>
 		</div>
