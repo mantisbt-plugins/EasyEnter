@@ -1,0 +1,43 @@
+<?php
+/** MantisBT - a php based bugtracking system
+ *
+ * Copyright (C) 2015  Filmakademie Baden-Württemberg
+ *
+ * MantisBT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * MantisBT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** German (Deutsch)
+ *
+ * @author Frithjof Gnas, fgnas@filmakademie.de
+ */
+
+$s_plugin_easyenter_title = 'Mantis EasyEnter';
+$s_plugin_easyenter_description = 'Eingabeformular für Bugs, das aber auf die drei wichtigsten Felder reduziert ist';
+
+$s_plugin_EasyEnter_title = 'Mantis EasyEnter';
+$s_plugin_EasyEnter_config = 'Konfiguration';
+$s_plugin_EasyEnter_config_project = 'Projekt';
+$s_plugin_EasyEnter_config_project_helptxt = '<q>[Alle Projekte]</q> für globale Standard-Einstellungen wählen, für projektspezifische Einstellungen (die die globalen Einstellungen <b>erweitern</b>) das entspr. Projekt wählen, die Einstellungen vornehmen und speichern';
+$s_plugin_EasyEnter_config_include_fields = 'Anzuzeigende Felder';
+$s_plugin_EasyEnter_config_fields_default_fields = 'Standardfelder';
+$s_plugin_EasyEnter_config_fields_custom_fields = 'Benutzerdefinierte Felder';
+$s_plugin_EasyEnter_config_exclude_fields = 'Auszublendende Felder';
+$s_plugin_EasyEnter_config_exclude_specialfields = 'Spezielle auszublendende Elemente/Felder';
+$s_plugin_EasyEnter_config_exclude_special_profileinput = 'Aufklapp-Bereich zum Eingeben eines Rechnerprofiles';
+$s_plugin_EasyEnter_config_exclude_special_asterisks = 'Pflichtfeld-Sternchen';
+$s_plugin_EasyEnter_config_max_access_level = 'Aktiv für Benutzer bis einschließlich';
+$s_plugin_EasyEnter_config_field_values = 'Feldwerte vorbelegen';
+$s_plugin_EasyEnter_config_field_values_helptxt = 'Um ein Feld mit einem Wert vorzubelegen, können hier entspr. Werte für die Felder eingefügt werden. Für Checkboxen muss das Schlüsselwort <q>CHECKED</q> gesetzt werden, um diese anzuhaken. Multiselects sowie mehrere Checkboxen einer Kategorie werden bisher nicht unterstützt!';
+
+$s_plugin_EasyEnter_noscriptwarning = 'Javascript ist im Browser deaktiviert! <br>EasyEnter kann dieses Formular leider nicht in einer reduzierten Version anzeigen!';

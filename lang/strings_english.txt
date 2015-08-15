@@ -1,0 +1,43 @@
+<?php
+/** MantisBT - a php based bugtracking system
+ *
+ * Copyright (C) 2015  Filmakademie Baden-Württemberg
+ *
+ * MantisBT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * MantisBT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** English (English)
+ *
+ * @author Frithjof Gnas, fgnas@filmakademie.de
+ */
+
+$s_plugin_easyenter_title = 'Mantis EasyEnter';
+$s_plugin_easyenter_description = 'Form for submitting bugs, but reduced to the most important three fields';
+
+$s_plugin_EasyEnter_title = 'Mantis EasyEnter';
+$s_plugin_EasyEnter_config = 'Konfiguration';
+$s_plugin_EasyEnter_config_project = 'Project';
+$s_plugin_EasyEnter_config_project_helptxt = 'Select <q>All Projects</q> for global settings for alle projects. To make project specific settings (which <b>overwrite</b> the global settings) select the approbiate project, set the options you wish and save them.';
+$s_plugin_EasyEnter_config_include_fields = 'Fields to show';
+$s_plugin_EasyEnter_config_fields_default_fields = 'Default fields';
+$s_plugin_EasyEnter_config_fields_custom_fields = 'Custom fields';
+$s_plugin_EasyEnter_config_exclude_fields = 'Fields to hide';
+$s_plugin_EasyEnter_config_exclude_specialfields = 'Special elements/fields to hide';
+$s_plugin_EasyEnter_config_exclude_special_profileinput = 'Expand-area where you add an own custom computer profile';
+$s_plugin_EasyEnter_config_exclude_special_asterisks = 'Asterisks marking mandatory fields';
+$s_plugin_EasyEnter_config_max_access_level = 'Active for user including level';
+$s_plugin_EasyEnter_config_field_values = 'Preallocate field values';
+$s_plugin_EasyEnter_config_field_values_helptxt = 'To preallocate a field with a value (e.g. for excluded fields), the according values can be keyed in here. To mark single checkboxes the keyword <q>CHECKED</q> should be set. Multiselects or several checkboxes of one category are not supported so far!';
+
+$s_plugin_EasyEnter_noscriptwarning = 'Javascript is deactivated in your browser! <br>EasyEnter cannot change this form to a reduced one!';
