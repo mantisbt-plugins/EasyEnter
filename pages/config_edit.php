@@ -25,10 +25,10 @@ access_ensure_global_level( config_get( 'manage_plugin_threshold' ) );
  * @return mixed
  */
 function plugin_config_get_wpid( $p_option, $pid = null ) {
-    if( $pid == 0 ) {
-        $pid = null;
-    }
-    return plugin_config_get( $p_option, null, null, null, $p_project );
+	if( $pid == 0 ) {
+		$pid = null;
+	}
+	return plugin_config_get( $p_option, null, null, null, $p_project );
 }
 
 /**
@@ -38,8 +38,8 @@ function plugin_config_get_wpid( $p_option, $pid = null ) {
  * @param int $pid
  */
 function plugin_config_set_wpid( $p_option, $p_value, $pid = 0 ) {
-    $p_project = null;
-    plugin_config_set( $p_option, $p_value, NO_USER, $pid );
+	$p_project = null;
+	plugin_config_set( $p_option, $p_value, NO_USER, $pid );
 }
 
 
@@ -59,16 +59,16 @@ $f_field_values = gpc_get_string_array('field_values');
 
 
 if ( plugin_config_get_wpid( 'include_fields', $project_id ) != $f_include_fields ) {
-    plugin_config_set_wpid( 'include_fields', $f_include_fields, $project_id );
+	plugin_config_set_wpid( 'include_fields', $f_include_fields, $project_id );
 }
 if ( plugin_config_get_wpid( 'exclude_fields', $project_id ) != $f_exclude_fields ) {
-    plugin_config_set_wpid( 'exclude_fields', $f_exclude_fields, $project_id );
+	plugin_config_set_wpid( 'exclude_fields', $f_exclude_fields, $project_id );
 }
 if ( plugin_config_get_wpid( 'max_access_level', $project_id ) != $f_max_access_level ) {
-    plugin_config_set_wpid( 'max_access_level', $f_max_access_level, $project_id );
+	plugin_config_set_wpid( 'max_access_level', $f_max_access_level, $project_id );
 }
 if ( plugin_config_get_wpid( 'field_values', $project_id ) != $f_field_values ) {
-    plugin_config_set_wpid( 'field_values', $f_field_values, $project_id );
+	plugin_config_set_wpid( 'field_values', $f_field_values, $project_id );
 }
 
 
