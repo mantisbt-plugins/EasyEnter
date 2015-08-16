@@ -1,6 +1,6 @@
 <?php
 # Mantis Plugin "EasyEnter"
-# Copyright (C) 2015 Frithjof Gnas - fg@
+# Copyright (C) 2015 Frithjof Gnas - fg@prae-sensation.de
 #
 # Description:
 # Often there's a problem for noob-users to know what to do with a bugtracker.
@@ -181,7 +181,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 
 
 	/**
-	 * Set current - global set - project id to local class-property
+	 * Sets the current globally set project id to class-property
 	 */
 	function set_current_project( ) {
 		$this->project_id = (int) helper_get_current_project();;

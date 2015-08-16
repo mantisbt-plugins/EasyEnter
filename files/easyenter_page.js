@@ -1,3 +1,21 @@
+/**
+ # Mantis Plugin "EasyEnter"
+ # Copyright (C) 2015 Frithjof Gnas - fg@prae-sensation.de
+ #
+ # Javascript functions and calls to slim down the bug-report-form on the
+ # configured base of include_fields, field_values etc..
+ #
+ # Disclaimer & License:
+ # This plugin - EasyEnter - is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 /*
  * Function calls, plugin execution
  */
@@ -32,7 +50,10 @@ function populate_field_values( ) {
 		//radio buttons need special actions, the radio button with "field_name"
 		// AND the configured field_value should get the attribute "checked"
 		if( thisInputfield.attr( 'type' ) == 'radio' ) {
-			thisInputfield = jQuery( '[name="' + field_name + '"][value="' + easyenter_config.field_values[ field_name ] + '"]' );
+			thisInputfield = jQuery(
+				'[name="' + field_name + '"][value="'
+					+ easyenter_config.field_values[ field_name ] + '"]'
+			);
 			thisInputfield.attr('checked', 'checked');
 			continue;
 		}
@@ -125,6 +146,10 @@ function hide_custom_profile_row( ) {
 }
 
 
+/**
+ * Hide all elements with CSS-class "required" which means hide all asterisks
+ * as well as the notice "* means mandatory field"
+ */
 function hide_mandatory_asterisks( ) {
 	jQuery( 'span.required').hide();
 }

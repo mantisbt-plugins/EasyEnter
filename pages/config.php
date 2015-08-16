@@ -1,6 +1,11 @@
 <?php
 # Mantis Plugin "EasyEnter"
-# Copyright (C) 2015 Frithjof Gnas - fg@
+# Copyright (C) 2015 Frithjof Gnas - fg@prae-sensation.de
+#
+# Description:
+# Configuration form for EasyEnter plugin. Set the fields to include, the values
+# to populate fields with an defining the threshold when the plugin should
+# become active.
 #
 # Disclaimer & License:
 # This plugin - EasyEnter - is distributed in the hope that it will be useful,
@@ -18,24 +23,24 @@ html_page_top( plugin_lang_get( 'title' ) );
 
 print_manage_menu( );
 
-# Default value, overwritten by GET-Value or previous set session
-if( !isset( $_SESSION[ 'selected_project_id' ] ) ) {
-	$_SESSION[ 'selected_project_id' ] = 0;
-}
+
+
+# Default project-id value, overwritten by GET-Value
+$_SESSION['selected_project_id'] = 0;
 if( isset( $_GET['project_id'] ) ) {
-	$_SESSION[ 'selected_project_id' ] = (int) $_GET['project_id'];
+	$_SESSION['selected_project_id'] = (int) $_GET['project_id'];
 }
 
 
 # For include/exclude select-field-list
-$list_fieldnames = array(
+$g_list_fieldnames = array(
 	'category_id', 'reproducibility', 'severity', 'priority', 'profile_id',
 	'platform', 'os', 'os_build', 'handler_id', 'summary', 'description',
 	'steps_to_reproduce', 'additional_info', 'ufile[]', 'view_state',
 	'report_stay'
 );
 
-# For Noscript-warning
+# For Noscript-warning; background-color
 $status_colors = config_get('status_colors');
 $warn_color    = $status_colors['new'];
 
@@ -43,39 +48,54 @@ $warn_color    = $status_colors['new'];
 
 
 /**
- * Build Multiselect with all available bug-report fields and the custom fields
+ * Build multiselect with all available bug-report fields and the custom fields
  * that are assigned to current project.
  * To mark the saved options an array with the names of the selected fields has
  * to be passed.
- * @param string $name           Name for the select element
- * @param array $selected_fields
- * @return void                  echos string
+ * @param string $p_name			Name for the select element
+ * @param array $p_selected_fields	Array with field names that were set so far (to
+ * 									show them as selected)
+ * @return void						echos string
  */
-function print_select_available_fields( $name, $selected_fields ) {
-	global $list_fieldnames;
+function print_select_available_fields( $p_name, $p_selected_fields ) {
+	global $g_list_fieldnames;
 
 	#Build dropdown with all available fields for in-/excluding
 	$html = '
-	<select name="' . $name . '[]" size="11" multiple="multiple" style="width:99%">
+	<select name="' . $p_name . '[]" size="11" multiple="multiple" style="width:99%">
 		<optgroup label="' .  plugin_lang_get( 'config_fields_default_fields' ) .'">
 	';
 
-	for( $i = 0; $i < count( $list_fieldnames ); $i++) {
+	for( $i = 0; $i < count( $g_list_fieldnames ); $i++) {
 		$selected = '';
-		if( in_array( $list_fieldnames[$i], $selected_fields ) ) {
+		if( in_array( $g_list_fieldnames[$i], $p_selected_fields ) ) {
 			$selected = ' selected="selected" ';
 		}
-		if( lang_exists( $list_fieldnames[$i], lang_get_current() ) ) {
-			$html .= "\n\t\t\t" . '<option value="' . $list_fieldnames[$i] . '" '
-				. $selected . '>' . lang_get($list_fieldnames[$i]) . '</option>';
-		} elseif( lang_exists( str_replace( '_id', '', $list_fieldnames[$i]), lang_get_current() ) ) {
-			$html .= "\n\t\t\t" . '<option value="' . $list_fieldnames[$i] . '" '
-				. $selected . '>' . lang_get(str_replace( '_id', '', $list_fieldnames[$i])) . '</option>';
-		} elseif( lang_exists( $list_fieldnames[$i] . 'rmation', lang_get_current() ) ) {
-			#field additional information got the field name additional_info,
-			# not matching the approbiate lang-string :-(
-			$html .= "\n\t\t\t" . '<option value="' . $list_fieldnames[$i] . '" '
-				. $selected . '>' . lang_get( $list_fieldnames[$i] . 'rmation' ) . '</option>';
+
+		#Generate <option>, because of some inconsistencies there are several
+		# if-cases (e.g. lang string for field "category_id" is "category",
+		# for field "additional_info" it is "additiona_information")
+		$field_name = $g_list_fieldnames[$i];
+		$field_name_wo_id = str_replace( '_id', '', $g_list_fieldnames[ $i ] );
+		$field_name_w_rmation = $g_list_fieldnames[$i] . 'rmation';
+		if( lang_exists( $field_name, lang_get_current( ) ) ) {
+			$html .= "\n\t\t\t"
+				. '<option value="' . $g_list_fieldnames[ $i ] . '" ' . $selected . '>'
+					. lang_get( $field_name )
+				. '</option>';
+
+		} elseif( lang_exists( $field_name_wo_id, lang_get_current( ) ) ) {
+			$html .= "\n\t\t\t"
+				. '<option value="' . $g_list_fieldnames[ $i ] . '" ' . $selected . '>'
+					. lang_get( $field_name_wo_id )
+				. '</option>';
+
+		} elseif( lang_exists( $field_name_w_rmation, lang_get_current( ) ) ) {
+			$html .= "\n\t\t\t"
+				. '<option value="' . $g_list_fieldnames[ $i ] . '" ' . $selected . '>'
+					. lang_get( $field_name_w_rmation )
+				. '</option>';
+
 		}
 	}
 	$html .= "\n\t\t</optgroup>\n\n";
@@ -83,30 +103,33 @@ function print_select_available_fields( $name, $selected_fields ) {
 
 	#Add custom fields (if specific project is selected only the fields
 	# assigned to it)
-	$current_project_id = $_SESSION[ 'selected_project_id' ];
+	$current_project_id = $_SESSION['selected_project_id'];
 	$t_custom_fields = custom_field_get_ids();
 	$customfields_options = [];
 	foreach( $t_custom_fields as $t_field_id ) {
-
 		$selected = '';
 		$field_name = 'custom_field_' . $t_field_id;
-		if( in_array( $field_name, $selected_fields ) ) {
+		if( in_array( $field_name, $p_selected_fields ) ) {
 			$selected = ' selected="selected" ';
 		}
 
-		if( $current_project_id == 0 || in_array($current_project_id, custom_field_get_project_ids( $t_field_id ) ) ) {
+		$t_field_in_selected_project_id = in_array(
+			$current_project_id, custom_field_get_project_ids( $t_field_id )
+		);
+		if( $current_project_id == 0 || $t_field_in_selected_project_id ) {
 			$t_desc = custom_field_get_definition( $t_field_id );
 
-			$customfields_options[] = '<option value="' . $field_name . '" ' . $selected . '>'
-				. custom_field_get_display_name( $t_desc['name'] )
+			$customfields_options[] = "\n\t\t"
+				.'<option value="' . $field_name . '" ' . $selected . '>'
+					. custom_field_get_display_name( $t_desc['name'] )
 				. '</option>';
 		}
 	}
 
 	#Only add optgroup "custom fields" if there are any of them
-	if( count($customfields_options) > 0) {
+	if( count( $customfields_options ) > 0) {
 		$html .= '
-			<optgroup label="' . plugin_lang_get('config_fields_custom_fields') . '">
+			<optgroup label="' . plugin_lang_get( 'config_fields_custom_fields' ) . '">
 				' . implode( "\n\t\t\t\t", $customfields_options ) . '
 			</optgroup>
 		';
@@ -124,25 +147,24 @@ function print_select_available_fields( $name, $selected_fields ) {
  */
 function plugin_config_get_wpid( $p_option ) {
 	$p_project = null;
-	if( isset( $_SESSION[ 'selected_project_id' ] )
-		&& $_SESSION[ 'selected_project_id' ] != 0 ) {
-		$p_project = (int) $_SESSION[ 'selected_project_id' ];
+	if( $_SESSION['selected_project_id'] == 0 ) {
+		$p_project = $_SESSION['selected_project_id'];
 	}
 	return plugin_config_get( $p_option, null, null, null, $p_project );
 }
 
 /**
  * Checks if $array has $key than return the value otherwise return $default
- * @param string $key
- * @param array $array
- * @param mixed $default (optional) value to set if $key is not set
+ * @param string $p_key
+ * @param array $p_array
+ * @param mixed $p_default (optional) value to set if $key is not set
  * @return mixed
  */
-function issetOrDefault( $key, $array, $default = null ) {
-	if( isset( $array[$key] ) ) {
-		return $array[$key];
+function issetOrDefault( $p_key, $p_array, $p_default = null ) {
+	if( isset( $p_array[$p_key] ) ) {
+		return $p_array[$p_key];
 	}
-	return $default;
+	return $p_default;
 }
 
 
@@ -177,7 +199,7 @@ function issetOrDefault( $key, $array, $default = null ) {
 	</td>
 	<td class="center" width="40%">
 		<select name="project_id" id="project_id" style="width:99%">
-			<?php print_project_option_list( $_SESSION[ 'selected_project_id' ] ); ?>
+			<?php print_project_option_list( $_SESSION['selected_project_id'] ); ?>
 		</select>
 	</td>
 </tr>
@@ -187,9 +209,11 @@ function issetOrDefault( $key, $array, $default = null ) {
 		<?php echo plugin_lang_get( 'config_include_fields' )?>
 	</td>
 	<td class="center">
-		<?php print_select_available_fields(
+		<?php
+		print_select_available_fields(
 			'include_fields', plugin_config_get_wpid( 'include_fields' )
-		); ?>
+		);
+		?>
 	</td>
 </tr>
 
@@ -198,9 +222,11 @@ function issetOrDefault( $key, $array, $default = null ) {
 		<?php echo plugin_lang_get( 'config_exclude_fields' )?>
 	</td>
 	<td class="center">
-		<?php print_select_available_fields(
+		<?php
+		print_select_available_fields(
 			'exclude_fields', plugin_config_get_wpid( 'exclude_fields' )
-		); ?>
+		);
+		?>
 	</td>
 </tr>
 
@@ -213,7 +239,8 @@ function issetOrDefault( $key, $array, $default = null ) {
 			<label><input type="checkbox" name="exclude_fields[]"
 				<?php if( in_array( 'special.custom_profile', plugin_config_get_wpid( 'exclude_fields' ) ) ) {
 					echo 'checked="checked"';
-				} ?>
+				}
+				?>
 				style="margin-bottom:2.1ex;float:left"
 				value="special.custom_profile"><?php echo plugin_lang_get( 'config_exclude_special_profileinput' ) ?></label>
 		</div>
@@ -235,19 +262,25 @@ function issetOrDefault( $key, $array, $default = null ) {
 	</td>
 	<td class="center">
 		<?php # Get available groups with naming via translation string (123:Grpname,456:Grp2,...)
-		$access_levels_string = lang_get( 'access_levels_enum_string' );
-		$access_levels = explode( ',', $access_levels_string );
+		$t_access_levels_string = lang_get( 'access_levels_enum_string' );
+		$t_access_levels = explode( ',', $t_access_levels_string );
 		$selected_max_level = plugin_config_get_wpid( 'max_access_level' );
 		?>
 		<select name="max_access_level" size="1" id="sel__maxaccesslvl">
 			<option value=""><?php echo lang_get( 'select_option' ) ?></option>
-			<?php for( $i = 0; $i < count( $access_levels ); $i++ ) {
-				$level = explode( ':', $access_levels[$i] );
+			<?php for( $i = 0; $i < count( $t_access_levels ); $i++ ) {
+
+				$t_level = explode( ':', $t_access_levels[$i] );
 				echo "\n\t\t\t";
-				if( $selected_max_level == $level[0]) {
-					echo '<option value="' . $level[0] . '" selected="selected">' . $level[1] . '</option>';
+
+				if( $selected_max_level == $t_level[0]) {
+					echo '<option value="' . $t_level[0] . '" selected="selected">'
+						. $t_level[1]
+					. '</option>';
 				} else {
-					echo '<option value="' . $level[0] . '">' . $level[1] . '</option>';
+					echo '<option value="' . $t_level[0] . '">'
+						. $t_level[1]
+					. '</option>';
 				}
 			} ?>
 		</select>
@@ -263,13 +296,17 @@ function issetOrDefault( $key, $array, $default = null ) {
 		<table id="field_values_fields">
 		<?php
 		$set_field_values = plugin_config_get_wpid( 'field_values' );
-		for( $i = 0; $i < count( $list_fieldnames ); $i++ ) {
-			if( lang_exists( $list_fieldnames[ $i ], lang_get_current( ) ) ) {
-				$field_title = lang_get( $list_fieldnames[$i] );
-			} elseif( lang_exists( str_replace( '_id', '', $list_fieldnames[$i]), lang_get_current() ) ) {
-				$field_title = lang_get( str_replace( '_id', '', $list_fieldnames[$i]) );
-			} elseif( lang_exists( $list_fieldnames[$i] . 'rmation', lang_get_current() ) ) {
-				$field_title = lang_get( $list_fieldnames[$i] . 'rmation' );
+		for( $i = 0; $i < count( $g_list_fieldnames ); $i++ ) {
+
+			$field_name = $g_list_fieldnames[$i];
+			$field_name_wo_id = str_replace( '_id', '', $g_list_fieldnames[ $i ] );
+			$field_name_w_rmation = $g_list_fieldnames[$i] . 'rmation';
+			if( lang_exists( $field_name, lang_get_current( ) ) ) {
+				$field_title = lang_get( $field_name );
+			} elseif( lang_exists( $field_name_wo_id, lang_get_current() ) ) {
+				$field_title = lang_get( $field_name_wo_id );
+			} elseif( lang_exists( $field_name_w_rmation, lang_get_current() ) ) {
+				$field_title = lang_get( $field_name_w_rmation );
 			} else {
 				continue;
 			}
@@ -277,8 +314,12 @@ function issetOrDefault( $key, $array, $default = null ) {
 
 			echo '<tr><td>' . $field_title . '</td>
 			<td><input type="text" value="' .
-				htmlspecialchars( issetOrDefault( $list_fieldnames[ $i ], $set_field_values, '' ) ) . '"
-				name="field_values[' . $list_fieldnames[$i] . ']"></td></tr>';
+				htmlspecialchars(
+					issetOrDefault(
+						$g_list_fieldnames[ $i ], $set_field_values, ''
+					)
+				) . '" name="field_values[' . $g_list_fieldnames[$i] . ']">
+			</td></tr>';
 		}
 		?>
 		</table>
@@ -298,23 +339,29 @@ function issetOrDefault( $key, $array, $default = null ) {
 
 
 <script>
+/**
+ * Visually emphasize passed "elem" if empty
+ * @param elem
+ */
 function trigger_gray_out_if_empty( elem ) {
 	if( elem.val( ).replace( /\s/g, '' ) == '' ) {
-		elem.css('background-color', '#cecece');
+		elem.css( 'background-color', '#cecece' );
 	} else {
-		elem.css('background-color', '#ffffff');
+		elem.css( 'background-color', '#ffffff' );
 	}
 }
+
+
 /**
  * Gray out field_value-fields without content, add event listener to gray
  * out/whiten the appropriate fields on entering a value
  */
-var fvalinp = jQuery('#field_values_fields').find('input')
-fvalinp.each(function() {
-	trigger_gray_out_if_empty( jQuery(this) );
+var fvalinp = jQuery( '#field_values_fields' ).find( 'input' )
+fvalinp.each( function( ) {
+	trigger_gray_out_if_empty( jQuery( this ) );
 });
-fvalinp.on('blur, keyup', function(e) {
-	trigger_gray_out_if_empty( jQuery(this) );
+fvalinp.on( 'blur, keyup', function( ) {
+	trigger_gray_out_if_empty( jQuery( this ) );
 });
 
 
@@ -322,13 +369,13 @@ fvalinp.on('blur, keyup', function(e) {
  * Event handler for project dropdown select, reload entire form with
  * project_id-GET-parameter
  */
-jQuery('#project_id').on( 'change', function() {
+jQuery( '#project_id' ).on( 'change', function( ) {
 	window.location = window.location.protocol + '//'
 		+ window.location.host
 		+ window.location.pathname
-		+ '?page=EasyEnter/config.php&project_id=' + jQuery(this).val();
+		+ '?page=EasyEnter/config.php&project_id=' + jQuery( this ).val( );
 });
 
 </script>
 <?php
-html_page_bottom();
+html_page_bottom( );
