@@ -25,9 +25,10 @@ print_manage_menu( );
 
 
 
-# Default project-id value, overwritten by GET-Value
-$_SESSION['selected_project_id'] = 0;
-if( isset( $_GET['project_id'] ) ) {
+# Default value, overwritten by GET-Value or previous set session
+if( !isset( $_SESSION['selected_project_id'] ) ) {
+	$_SESSION[ 'selected_project_id' ] = 0;
+}if( isset( $_GET['project_id'] ) ) {
 	$_SESSION['selected_project_id'] = (int) $_GET['project_id'];
 }
 
