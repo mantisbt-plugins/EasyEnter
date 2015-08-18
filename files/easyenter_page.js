@@ -108,6 +108,13 @@ function hide_all_fields_show_include_fields( ) {
 			}
 		}
 	}
+	//Workaround: Profile-Dropdown is not shown if no profiles exists so far
+	// (whether global nor user-specific profiles) but the approbiate row is
+	// shown though.
+	jQuery('form[name="report_bug_form"]')
+		.find('tr')
+		.find('td.category:contains("' + label_selectprofile + '")')
+		.parent('tr').hide();
 
 
 	// Show fields defined in include_fields

@@ -215,8 +215,10 @@ class EasyEnterPlugin extends MantisPlugin  {
 
 
 		$html = '
-			<script> var easyenter_config = '
-				. json_encode( $easyenter_config ) . '; </script>
+			<script>
+				var easyenter_config = ' . json_encode( $easyenter_config ) . ';
+				var label_selectprofile = \'' . lang_get( 'select_profile' ) . '\';
+			</script>
 			<script type="text/javascript" src="'
 				. plugin_file( 'easyenter_page.js' ) . '"></script>';
 		return $html;
