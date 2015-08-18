@@ -69,12 +69,9 @@ class EasyEnterPlugin extends MantisPlugin  {
 			'include_fields' => array(
 				'summary', 'description'
 			),
-			# ..OR define fields to exclude (careful: fields included could not
-			# be excluded with this option anymore!)
-			# Entries with prefix "special." are not for fields but for special
+			# Exclude fields: Entries with prefix "special." are for special
 			# elements that should be excluded additionally
 			'exclude_fields' => array(
-				'category_id', 'view_state',
 				# hide the "profile ...or enter"-row
 				'special.custom_profile',
 				# hide the asterisks at the mandatory field-labels

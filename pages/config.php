@@ -219,19 +219,6 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 
 <tr <?php echo helper_alternate_class( )?>>
 	<td class="category">
-		<?php echo plugin_lang_get( 'config_exclude_fields' )?>
-	</td>
-	<td class="center">
-		<?php
-		print_select_available_fields(
-			'exclude_fields', plugin_config_get_wpid( 'exclude_fields' )
-		);
-		?>
-	</td>
-</tr>
-
-<tr <?php echo helper_alternate_class( )?>>
-	<td class="category">
 		<?php echo plugin_lang_get( 'config_exclude_specialfields' )?>
 	</td>
 	<td class="center exclude_special_fields">
