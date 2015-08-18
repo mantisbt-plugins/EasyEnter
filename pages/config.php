@@ -27,7 +27,7 @@ print_manage_menu( );
 
 # Default value, overwritten by GET-Value or previous set session
 if( !isset( $_SESSION['selected_project_id'] ) ) {
-	$_SESSION[ 'selected_project_id' ] = 0;
+	$_SESSION['selected_project_id'] = 0;
 }if( isset( $_GET['project_id'] ) ) {
 	$_SESSION['selected_project_id'] = (int) $_GET['project_id'];
 }
@@ -42,8 +42,8 @@ $g_list_fieldnames = array(
 );
 
 # For Noscript-warning; background-color
-$status_colors = config_get('status_colors');
-$warn_color    = $status_colors['new'];
+$t_status_colors = config_get('status_colors');
+$warn_color    = $t_status_colors['new'];
 
 
 
@@ -62,56 +62,59 @@ function print_select_available_fields( $p_name, $p_selected_fields ) {
 	global $g_list_fieldnames;
 
 	#Build dropdown with all available fields for in-/excluding
-	$html = '
+	$t_html = '
 	<select name="' . $p_name . '[]" size="11" multiple="multiple" style="width:99%">
 		<optgroup label="' .  plugin_lang_get( 'config_fields_default_fields' ) .'">
 	';
 
 	for( $i = 0; $i < count( $g_list_fieldnames ); $i++) {
-		$selected = '';
+		$t_selected = '';
 		if( in_array( $g_list_fieldnames[$i], $p_selected_fields ) ) {
-			$selected = ' selected="selected" ';
+			$t_selected = ' selected="selected" ';
 		}
 
 		#Generate <option>, because of some inconsistencies there are several
 		# if-cases (e.g. lang string for field "category_id" is "category",
 		# for field "additional_info" it is "additiona_information")
-		$field_name = $g_list_fieldnames[$i];
-		$field_name_wo_id = str_replace( '_id', '', $g_list_fieldnames[ $i ] );
-		$field_name_w_rmation = $g_list_fieldnames[$i] . 'rmation';
-		if( lang_exists( $field_name, lang_get_current( ) ) ) {
-			$html .= "\n\t\t\t"
-				. '<option value="' . $g_list_fieldnames[ $i ] . '" ' . $selected . '>'
-					. lang_get( $field_name )
+		$t_option = '';
+		$t_field_name = $g_list_fieldnames[$i];
+		$t_field_name_wo_id = str_replace( '_id', '', $g_list_fieldnames[$i] );
+		$t_field_name_w_rmation = $g_list_fieldnames[$i] . 'rmation';
+		if( lang_exists( $t_field_name, lang_get_current( ) ) ) {
+			$t_option = "\n\t\t\t"
+				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
+					. lang_get( $t_field_name )
 				. '</option>';
 
-		} elseif( lang_exists( $field_name_wo_id, lang_get_current( ) ) ) {
-			$html .= "\n\t\t\t"
-				. '<option value="' . $g_list_fieldnames[ $i ] . '" ' . $selected . '>'
-					. lang_get( $field_name_wo_id )
+		} elseif( lang_exists( $t_field_name_wo_id, lang_get_current( ) ) ) {
+			$t_option = "\n\t\t\t"
+				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
+					. lang_get( $t_field_name_wo_id )
 				. '</option>';
 
-		} elseif( lang_exists( $field_name_w_rmation, lang_get_current( ) ) ) {
-			$html .= "\n\t\t\t"
-				. '<option value="' . $g_list_fieldnames[ $i ] . '" ' . $selected . '>'
-					. lang_get( $field_name_w_rmation )
+		} elseif( lang_exists( $t_field_name_w_rmation, lang_get_current( ) ) ) {
+			$t_option = "\n\t\t\t"
+				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
+					. lang_get( $t_field_name_w_rmation )
 				. '</option>';
 
 		}
+
+		$t_html .= sprintf( $t_option, $t_selected );
 	}
-	$html .= "\n\t\t</optgroup>\n\n";
+	$t_html .= "\n\t\t</optgroup>\n\n";
 
 
 	#Add custom fields (if specific project is selected only the fields
 	# assigned to it)
 	$current_project_id = $_SESSION['selected_project_id'];
 	$t_custom_fields = custom_field_get_ids();
-	$customfields_options = [];
+	$t_customfields_options = [];
 	foreach( $t_custom_fields as $t_field_id ) {
-		$selected = '';
-		$field_name = 'custom_field_' . $t_field_id;
-		if( in_array( $field_name, $p_selected_fields ) ) {
-			$selected = ' selected="selected" ';
+		$t_selected = '';
+		$t_field_name = 'custom_field_' . $t_field_id;
+		if( in_array( $t_field_name, $p_selected_fields ) ) {
+			$t_selected = ' selected="selected" ';
 		}
 
 		$t_field_in_selected_project_id = in_array(
@@ -120,23 +123,23 @@ function print_select_available_fields( $p_name, $p_selected_fields ) {
 		if( $current_project_id == 0 || $t_field_in_selected_project_id ) {
 			$t_desc = custom_field_get_definition( $t_field_id );
 
-			$customfields_options[] = "\n\t\t"
-				.'<option value="' . $field_name . '" ' . $selected . '>'
+			$t_customfields_options[] = "\n\t\t"
+				.'<option value="' . $t_field_name . '" ' . $t_selected . '>'
 					. custom_field_get_display_name( $t_desc['name'] )
 				. '</option>';
 		}
 	}
 
 	#Only add optgroup "custom fields" if there are any of them
-	if( count( $customfields_options ) > 0) {
-		$html .= '
+	if( count( $t_customfields_options ) > 0) {
+		$t_html .= '
 			<optgroup label="' . plugin_lang_get( 'config_fields_custom_fields' ) . '">
-				' . implode( "\n\t\t\t\t", $customfields_options ) . '
+				' . implode( "\n\t\t\t\t", $t_customfields_options ) . '
 			</optgroup>
 		';
 	}
 
-	echo $html . '</select>';
+	echo $t_html . '</select>';
 }
 
 
@@ -287,7 +290,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 		for( $i = 0; $i < count( $g_list_fieldnames ); $i++ ) {
 
 			$field_name = $g_list_fieldnames[$i];
-			$field_name_wo_id = str_replace( '_id', '', $g_list_fieldnames[ $i ] );
+			$field_name_wo_id = str_replace( '_id', '', $g_list_fieldnames[$i] );
 			$field_name_w_rmation = $g_list_fieldnames[$i] . 'rmation';
 			if( lang_exists( $field_name, lang_get_current( ) ) ) {
 				$field_title = lang_get( $field_name );
@@ -304,7 +307,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 			<td><input type="text" value="' .
 				htmlspecialchars(
 					issetOrDefault(
-						$g_list_fieldnames[ $i ], $set_field_values, ''
+						$g_list_fieldnames[$i], $set_field_values, ''
 					)
 				) . '" name="field_values[' . $g_list_fieldnames[$i] . ']">
 			</td></tr>';
@@ -318,7 +321,8 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 
 <tr>
 	<td class="center" colspan="2">
-		<input type="submit" class="button" value="<?php echo lang_get( 'change_configuration' )?>" />
+		<input type="submit" class="button"
+			value="<?php echo lang_get( 'change_configuration' )?>" />
 	</td>
 </tr>
 

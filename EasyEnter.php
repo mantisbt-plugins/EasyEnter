@@ -38,10 +38,12 @@ class EasyEnterPlugin extends MantisPlugin  {
 	var $current_config = [];
 
 
+
 	/**
 	 * @var int
 	 */
 	var $project_id;
+
 
 
 	/**
@@ -62,6 +64,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 		$this->author = 'Frithjof Gnas';
 		$this->contact = 'fg@prae-sensation.de';
 	}
+
 
 
 	function config( ) {
@@ -89,6 +92,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 	}
 
 
+
 	/**
 	 * @return array
 	 */
@@ -98,6 +102,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 			'EVENT_LAYOUT_PAGE_FOOTER' => 'replace_bug_report_page',
 		);
 	}
+
 
 
 	/**
@@ -166,15 +171,16 @@ class EasyEnterPlugin extends MantisPlugin  {
 		}
 
 		# access levels (defined in core/constant_in.php)
-		$user_id = auth_get_current_user_id( );
-		$user_access_level = user_get_access_level( $user_id );
-		$max_access_level = $this->get_current_config( 'max_access_level' );
-		if( $user_access_level > $max_access_level ) {
+		$t_user_id = auth_get_current_user_id( );
+		$t_user_access_level = user_get_access_level( $t_user_id );
+		$t_max_access_level = $this->get_current_config( 'max_access_level' );
+		if( $t_user_access_level > $t_max_access_level ) {
 			return false;
 		}
 
 		return true;
 	}
+
 
 
 	/**
@@ -188,22 +194,18 @@ class EasyEnterPlugin extends MantisPlugin  {
 
 	/**
 	 * Get the configuration valid for current project.
-	 * @param string $key
+	 * @param string $p_key
 	 * @return mixed
 	 */
-	function get_current_config( $key ) {
-		return plugin_config_get( $key, null, null, null, $this->project_id );
+	function get_current_config( $p_key ) {
+		return plugin_config_get( $p_key, null, null, null, $this->project_id );
 	}
-
-
-
-
 
 
 
 	function jquery_rebuild_bug_report_page()
 	{
-		$easyenter_config = [
+		$t_easyenter_config = [
 			'include_fields'=> $this->get_current_config('include_fields'),
 			'exclude_fields'=> $this->get_current_config('exclude_fields'),
 			'field_values'=> $this->get_current_config('field_values'),
@@ -211,13 +213,13 @@ class EasyEnterPlugin extends MantisPlugin  {
 		];
 
 
-		$html = '
+		$t_html = '
 			<script>
-				var easyenter_config = ' . json_encode( $easyenter_config ) . ';
+				var easyenter_config = ' . json_encode( $t_easyenter_config ) . ';
 				var label_selectprofile = \'' . lang_get( 'select_profile' ) . '\';
 			</script>
 			<script type="text/javascript" src="'
 				. plugin_file( 'easyenter_page.js' ) . '"></script>';
-		return $html;
+		return $t_html;
 	}
 }
