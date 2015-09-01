@@ -1,7 +1,7 @@
 <?php
 /** MantisBT - a php based bugtracking system
  *
- * Copyright (C) 2015  Filmakademie Baden-Württemberg
+ * Copyright (C) 2015  fg@prae-sensation.de
  *
  * MantisBT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
 
 /** German (Deutsch)
  *
- * @author Frithjof Gnas, fgnas@filmakademie.de
+ * @author Frithjof Gnas, fg@prae-sensation.de
  */
 
 $s_plugin_easyenter_title = 'Mantis EasyEnter';
-$s_plugin_easyenter_description = 'Eingabeformular für Bugs, das aber auf die drei wichtigsten Felder reduziert ist';
+$s_plugin_easyenter_description = 'Einstellen, welche Felder für das Bug-Eingabeformular sichtbar sein sollen (bspw. nur "Zusammenfassung" + "Beschreibung"). Außerdem können die Werte von Feldern vorbelegt werden und genau eingestellt werden, welche Gruppen das EasyEnter-Fromular sehen und welche das normale, vollständige.';
 
 $s_plugin_EasyEnter_title = 'Mantis EasyEnter';
 $s_plugin_EasyEnter_config = 'Konfiguration';
