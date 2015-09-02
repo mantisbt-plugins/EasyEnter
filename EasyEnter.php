@@ -57,8 +57,8 @@ class EasyEnterPlugin extends MantisPlugin  {
 		$this->version = '1.0';
 		$this->requires = array(
 			'MantisCore' => '1.2.0',
-			'jQuery' => '1.9.1', # jQuery for form manipulation; plugin-link:
-								 #  https://github.com/initOS/jquery.git
+			'jQuery' => '1.9', 	# jQuery for form manipulation; plugin-link:
+								#  https://github.com/mantisbt-plugins/jquery
 		);
 
 		$this->author = 'Frithjof Gnas';

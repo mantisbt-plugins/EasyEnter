@@ -20,7 +20,7 @@ but the hurdle of entering bugs is lowered significantly!
 
 ## Requirements ##
 This plugin uses jQuery to slim down the bug report form, the prior installation
-of the jQuery-plugin (https://github.com/initOS/jquery.git) is mandatory!
+of the jQuery-plugin (https://github.com/mantisbt-plugins/jquery) is mandatory!
 
 ## Installation ##
 Copy the folder "`EasyEnter`" in your plugin directory and open the plugin
