@@ -3,7 +3,7 @@
 A MantisBT plugin to make the **submission** of bugs/feature requests a little bit
 easier for less IT-skilled users.
 
-Often there's a problem for noob-users to know what to do with a bugtracker.
+Often there's a problem for "noob-users" to know what to do with a bugtracker.
 Even if it is really easy and there is a pictured documentation the users just
 don't get it to enter their wishes/feature requests, bugs etc. into the
 bugtracker. Instead they send you dozens of mails or worse: they call you to
