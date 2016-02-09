@@ -205,12 +205,12 @@ class EasyEnterPlugin extends MantisPlugin  {
 
 	function jquery_rebuild_bug_report_page()
 	{
-		$t_easyenter_config = [
+		$t_easyenter_config = array(
 			'include_fields'=> $this->get_current_config('include_fields'),
 			'exclude_fields'=> $this->get_current_config('exclude_fields'),
 			'field_values'=> $this->get_current_config('field_values'),
 			'max_access_level'=> $this->get_current_config('max_access_level'),
-		];
+		);
 
 
 		$t_html = '
