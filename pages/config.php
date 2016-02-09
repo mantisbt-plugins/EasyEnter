@@ -40,6 +40,13 @@ $g_list_fieldnames = array(
 	'steps_to_reproduce', 'additional_info', 'ufile[]', 'view_state',
 	'report_stay'
 );
+# For translation of fields where the fieldname and the corresponding language
+# .string differ to much (Key->Value; fieldname->langstring
+$g_list_fields_langstring = [
+	'category_id' => 'category', 'profile_id' => 'profile',
+	'handler_id' => 'handler', 'additional_info' => 'additional_information',
+	'ufile[]' => 'upload_file'
+];
 
 # For Noscript-warning; background-color
 $t_status_colors = config_get('status_colors');
@@ -59,7 +66,7 @@ $warn_color    = $t_status_colors['new'];
  * @return void						echos string
  */
 function print_select_available_fields( $p_name, $p_selected_fields ) {
-	global $g_list_fieldnames;
+	global $g_list_fieldnames, $g_list_fields_langstring;
 
 	#Build dropdown with all available fields for in-/excluding
 	$t_html = '
@@ -73,29 +80,20 @@ function print_select_available_fields( $p_name, $p_selected_fields ) {
 			$t_selected = ' selected="selected" ';
 		}
 
-		#Generate <option>, because of some inconsistencies there are several
-		# if-cases (e.g. lang string for field "category_id" is "category",
-		# for field "additional_info" it is "additiona_information")
+		#Generate <option>, because of some inconsistencies an additional array
+		# "$g_list_fields_langstring" is used to get translation-strings for
+		# some fields (like "category" instead "category_id" or "upload_file"
+		# instead "ufile[]"
 		$t_option = '';
-		$t_field_name = $g_list_fieldnames[$i];
-		$t_field_name_wo_id = str_replace( '_id', '', $g_list_fieldnames[$i] );
-		$t_field_name_w_rmation = $g_list_fieldnames[$i] . 'rmation';
+		if ( isset( $g_list_fields_langstring[$g_list_fieldnames[$i]] ) ) {
+			$t_field_name = $g_list_fields_langstring[$g_list_fieldnames[$i]];
+		} else {
+			$t_field_name = $g_list_fieldnames[$i];
+		}
 		if( lang_exists( $t_field_name, lang_get_current( ) ) ) {
 			$t_option = "\n\t\t\t"
 				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
 					. lang_get( $t_field_name )
-				. '</option>';
-
-		} elseif( lang_exists( $t_field_name_wo_id, lang_get_current( ) ) ) {
-			$t_option = "\n\t\t\t"
-				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
-					. lang_get( $t_field_name_wo_id )
-				. '</option>';
-
-		} elseif( lang_exists( $t_field_name_w_rmation, lang_get_current( ) ) ) {
-			$t_option = "\n\t\t\t"
-				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
-					. lang_get( $t_field_name_w_rmation )
 				. '</option>';
 
 		}
