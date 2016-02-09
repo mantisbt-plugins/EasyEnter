@@ -28,7 +28,7 @@ function plugin_config_get_wpid( $p_option, $pid = null ) {
 	if( $pid == 0 ) {
 		$pid = null;
 	}
-	return plugin_config_get( $p_option, null, null, null, $p_project );
+	return plugin_config_get( $p_option, null, null, null, $pid );
 }
 
 /**
