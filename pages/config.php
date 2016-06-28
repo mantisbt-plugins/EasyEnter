@@ -35,10 +35,10 @@ if( !isset( $_SESSION['selected_project_id'] ) ) {
 
 # For include/exclude select-field-list
 $g_list_fieldnames = array(
-	'category_id', 'reproducibility', 'severity', 'priority', 'profile_id',
-	'platform', 'os', 'os_build', 'handler_id', 'summary', 'description',
-	'steps_to_reproduce', 'additional_info', 'ufile[]', 'view_state',
-	'report_stay'
+	'category_id', 'reproducibility', 'severity', 'priority', 'due_date', 
+	'profile_id', 'platform', 'os', 'os_build', 'handler_id', 'summary',
+	'description', 'steps_to_reproduce', 'additional_info', 'ufile[]',
+	'view_state', 'report_stay'
 );
 # For translation of fields where the fieldname and the corresponding language
 # .string differ to much (Key->Value; fieldname->langstring
