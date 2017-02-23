@@ -194,7 +194,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
+<tr>
 	<td class="category" width="60%">
 		<?php echo plugin_lang_get( 'config_project' )?>
 		<br /><span class="small"><?php echo plugin_lang_get( 'config_project_helptxt' )?></span>
@@ -206,7 +206,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
+<tr>
 	<td class="category">
 		<?php echo plugin_lang_get( 'config_include_fields' )?>
 	</td>
@@ -219,7 +219,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
+<tr>
 	<td class="category">
 		<?php echo plugin_lang_get( 'config_exclude_specialfields' )?>
 	</td>
@@ -245,7 +245,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
+<tr>
 	<td class="category">
 		<?php echo plugin_lang_get( 'config_max_access_level' )?>
 	</td>
@@ -276,7 +276,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
+<tr>
 	<td class="category">
 		<?php echo plugin_lang_get( 'config_field_values' )?>
 		<br><span class="small"><?php echo plugin_lang_get( 'config_field_values_helptxt' ) ?></span>
