@@ -75,29 +75,9 @@ function hide_all_fields_show_include_fields() {
 
 	// Hide all fields, except the hidden ones, submit/reset buttons
 	jQuery('div.field-container').each(function() {
-		showhide_input_field_row(jQuery(this).attr('name'), 0);
+		this.hide();
 	});
-
-	// Special fields/rows to hide...
-	if (easyenter_config.hasOwnProperty('exclude_fields')) {
-		for (i = 0; i < easyenter_config.exclude_fields.length; i++) {
-			if (easyenter_config.exclude_fields[i] == 'special.custom_profile') {
-				hide_custom_profile_row();
-				continue;
-			}
-			if (easyenter_config.exclude_fields[i] == 'special.mandatory_asterisks') {
-				hide_mandatory_asterisks();
-				continue;
-			}
-		}
-	}
-	// Workaround: Profile-Dropdown is not shown if no profiles exists so far
-	// (whether global nor user-specific profiles) but the approbiate row is
-	// shown though.
-	jQuery('form[name="report_bug_form"]').find('tr').find(
-			'td.category:contains("' + label_selectprofile + '")').parent('tr')
-			.hide();
-
+	
 	// Show fields defined in include_fields
 	for (i = 0; i < easyenter_config.include_fields.length; i++) {
 		showhide_input_field_row(easyenter_config.include_fields[i], 1);
