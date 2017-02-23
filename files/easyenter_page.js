@@ -74,10 +74,16 @@ function hide_all_fields_show_include_fields() {
 	var form = jQuery('form[name="report_bug_form"]');
 
 	// Hide all fields, except the hidden ones, submit/reset buttons
-	$('div.field-container').each(function() {
-		$(this).hide();
-	});
-	
+	$('div.field-container').each(
+			function() {
+				$(this).hide();
+
+				if (easyenter_config.include_fields.includes($(this).find(
+						"[id]")[0].id)) {
+					$(this).show();
+				}
+			});
+
 	// Show fields defined in include_fields
 	for (i = 0; i < easyenter_config.include_fields.length; i++) {
 		showhide_input_field_row(easyenter_config.include_fields[i], 1);
