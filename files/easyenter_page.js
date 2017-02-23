@@ -74,8 +74,8 @@ function hide_all_fields_show_include_fields() {
 	var form = jQuery('form[name="report_bug_form"]');
 
 	// Hide all fields, except the hidden ones, submit/reset buttons
-	jQuery('div.field-container').each(function() {
-		this.hide();
+	$('div.field-container').each(function() {
+		$(this).hide();
 	});
 	
 	// Show fields defined in include_fields
