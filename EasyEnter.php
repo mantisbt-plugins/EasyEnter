@@ -1,6 +1,6 @@
 <?php
 # Mantis Plugin "EasyEnter"
-# Copyright (C) 2015 Frithjof Gnas - fg@prae-sensation.de
+# Copyright (C) 2017 Frithjof Gnas - fg@prae-sensation.de
 #
 # Description:
 # Often there's a problem for noob-users to know what to do with a bugtracker.
@@ -54,11 +54,9 @@ class EasyEnterPlugin extends MantisPlugin  {
 		$this->description = lang_get( 'plugin_easyenter_description' );
 		$this->page = 'config';
 
-		$this->version = '1.0';
+		$this->version = '1.1';
 		$this->requires = array(
-			'MantisCore' => '1.2.0',
-			'jQuery' => '1.9', 	# jQuery for form manipulation; plugin-link:
-								#  https://github.com/mantisbt-plugins/jquery
+			'MantisCore' => '2.6.0',
 		);
 
 		$this->author = 'Frithjof Gnas';

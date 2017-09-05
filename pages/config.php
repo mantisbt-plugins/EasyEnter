@@ -19,9 +19,11 @@
 auth_reauthenticate( );
 access_ensure_global_level( config_get( 'manage_plugin_threshold' ) );
 
-html_page_top( plugin_lang_get( 'title' ) );
+layout_page_header( plugin_lang_get( 'title' ) );
 
-print_manage_menu( );
+layout_page_begin( 'manage_overview_page.php' );
+
+print_manage_menu( 'manage_plugin_page.php' );
 
 
 
@@ -70,7 +72,7 @@ function print_select_available_fields( $p_name, $p_selected_fields ) {
 
 	#Build dropdown with all available fields for in-/excluding
 	$t_html = '
-	<select name="' . $p_name . '[]" size="11" multiple="multiple" style="width:99%">
+	<select name="' . $p_name . '[]" size="11" multiple="multiple" class="form-control">
 		<optgroup label="' .  plugin_lang_get( 'config_fields_default_fields' ) .'">
 	';
 
@@ -175,41 +177,49 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 ?>
 <!-- NOSCRIPT-Hinweis -->
 <noscript><br>
-<table class="width100" cellspacing="1"><tbody><tr><td
-	style="background-color:<?php echo $warn_color ?>; text-align:center">
+<div class="col-md-12 col-xs-12">
+    <div class="panel panel-warning text-center">
 	<strong><?php echo plugin_lang_get( 'noscriptwarning' ) ?></strong>
-</td></tr></tbody></table>
-<br></noscript>
+    </div>
+</div></noscript>
 <!-- ENDE // NOSCRIPT-Hinweis -->
 
 
-<br />
-<form action="<?php echo plugin_page( 'config_edit' )?>" method="post">
-<?php echo form_security_field( 'plugin_easyenter_config_edit' ) ?>
-<table align="center" class="width50" cellspacing="1">
+<div class="col-md-12 col-xs-12">
+<div class="space-10"></div>
+<div class="form-container" >
 
+<form id="formatting-config-form" action="<?php echo plugin_page( 'config_edit' )?>" method="post">
+    <?php echo form_security_field( 'plugin_format_config_edit' ) ?>
+
+<div class="widget-box widget-color-blue2">
+<div class="widget-header widget-header-small">
+    <h4 class="widget-title lighter">
+        fa-terminal on fa-square<br>
+        <i class="ace-icon fa fa-medkit"></i>
+        <?php echo plugin_lang_get( 'title' ) . ': ' . plugin_lang_get( 'config' )?>
+    </h4>
+</div>
+<div class="widget-body">
+<div class="widget-main no-padding">
+<div class="table-responsive">
+<table class="table table-bordered table-condensed table-striped">
 <tr>
-	<td class="form-title" colspan="2">
-		<?php echo plugin_lang_get( 'title' ) . ': ' . plugin_lang_get( 'config' )?>
-	</td>
-</tr>
-
-<tr <?php echo helper_alternate_class( )?>>
-	<td class="category" width="60%">
+    <th class="category width-60">
 		<?php echo plugin_lang_get( 'config_project' )?>
 		<br /><span class="small"><?php echo plugin_lang_get( 'config_project_helptxt' )?></span>
-	</td>
-	<td class="center" width="40%">
-		<select name="project_id" id="project_id" style="width:99%">
+	</th>
+	<td class="center width-40">
+		<select name="project_id" id="project_id" class="form-control">
 			<?php print_project_option_list( $_SESSION['selected_project_id'] ); ?>
 		</select>
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
-	<td class="category">
+<tr>
+    <th class="category">
 		<?php echo plugin_lang_get( 'config_include_fields' )?>
-	</td>
+	</th>
 	<td class="center">
 		<?php
 		print_select_available_fields(
@@ -219,10 +229,10 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
-	<td class="category">
+<tr>
+	<th class="category">
 		<?php echo plugin_lang_get( 'config_exclude_specialfields' )?>
-	</td>
+	</th>
 	<td class="center exclude_special_fields">
 		<div style="width:98%;margin:0 auto;text-align:left;float:none">
 			<label><input type="checkbox" name="exclude_fields[]"
@@ -245,17 +255,17 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
-	<td class="category">
+<tr>
+	<th class="category">
 		<?php echo plugin_lang_get( 'config_max_access_level' )?>
-	</td>
+	</th>
 	<td class="center">
 		<?php # Get available groups with naming via translation string (123:Grpname,456:Grp2,...)
 		$t_access_levels_string = lang_get( 'access_levels_enum_string' );
 		$t_access_levels = explode( ',', $t_access_levels_string );
 		$selected_max_level = plugin_config_get_wpid( 'max_access_level' );
 		?>
-		<select name="max_access_level" size="1" id="sel__maxaccesslvl">
+		<select name="max_access_level" size="1" id="sel__maxaccesslvl" class="form-control">
 			<option value=""><?php echo lang_get( 'select_option' ) ?></option>
 			<?php for( $i = 0; $i < count( $t_access_levels ); $i++ ) {
 
@@ -276,13 +286,13 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 	</td>
 </tr>
 
-<tr <?php echo helper_alternate_class( )?>>
-	<td class="category">
+<tr>
+	<th class="category">
 		<?php echo plugin_lang_get( 'config_field_values' )?>
 		<br><span class="small"><?php echo plugin_lang_get( 'config_field_values_helptxt' ) ?></span>
-	</td>
+	</th>
 	<td class="center">
-		<table id="field_values_fields">
+		<table id="table table-condensed">
 		<?php
 		$set_field_values = plugin_config_get_wpid( 'field_values' );
 		for( $i = 0; $i < count( $g_list_fieldnames ); $i++ ) {
@@ -301,7 +311,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 			}
 
 
-			echo '<tr><td>' . $field_title . '</td>
+			echo '<tr><td class="text-left">' . $field_title . '&nbsp;</td>
 			<td><input type="text" value="' .
 				htmlspecialchars(
 					issetOrDefault(
@@ -319,8 +329,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 
 <tr>
 	<td class="center" colspan="2">
-		<input type="submit" class="button"
-			value="<?php echo lang_get( 'change_configuration' )?>" />
+        <input type="submit" class="btn btn-primary btn-white btn-round" value="<?php echo lang_get( 'change_configuration' )?>" />
 	</td>
 </tr>
 
