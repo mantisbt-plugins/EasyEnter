@@ -12,7 +12,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 
-form_security_validate( 'plugin_easyenter_config_edit' );
+form_security_validate( 'plugin_EasyEnter_config_edit' );
 
 auth_reauthenticate( );
 access_ensure_global_level( config_get( 'manage_plugin_threshold' ) );
@@ -75,5 +75,7 @@ if ( plugin_config_get_wpid( 'field_values', $project_id ) != $f_field_values ) 
 
 
 
+
+form_security_purge( 'plugin_EasyEnter_config_edit' );
 
 print_successful_redirect( plugin_page( 'config', true ) );

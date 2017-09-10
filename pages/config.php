@@ -190,12 +190,11 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 <div class="form-container" >
 
 <form id="formatting-config-form" action="<?php echo plugin_page( 'config_edit' )?>" method="post">
-    <?php echo form_security_field( 'plugin_format_config_edit' ) ?>
+    <?php echo form_security_field( 'plugin_EasyEnter_config_edit' ) ?>
 
 <div class="widget-box widget-color-blue2">
 <div class="widget-header widget-header-small">
     <h4 class="widget-title lighter">
-        fa-terminal on fa-square<br>
         <i class="ace-icon fa fa-medkit"></i>
         <?php echo plugin_lang_get( 'title' ) . ': ' . plugin_lang_get( 'config' )?>
     </h4>
@@ -292,7 +291,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 		<br><span class="small"><?php echo plugin_lang_get( 'config_field_values_helptxt' ) ?></span>
 	</th>
 	<td class="center">
-		<table id="table table-condensed">
+		<table id="field_values_fields" class="table table-condensed">
 		<?php
 		$set_field_values = plugin_config_get_wpid( 'field_values' );
 		for( $i = 0; $i < count( $g_list_fieldnames ); $i++ ) {
@@ -324,57 +323,20 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 		</table>
 	</td>
 </tr>
-
-
-
-<tr>
-	<td class="center" colspan="2">
-        <input type="submit" class="btn btn-primary btn-white btn-round" value="<?php echo lang_get( 'change_configuration' )?>" />
-	</td>
-</tr>
-
 </table>
+</div>
+</div>
+    <div class="widget-toolbox padding-8 clearfix">
+        <input type="submit" class="btn btn-primary btn-white btn-round" value="<?php echo lang_get( 'change_configuration' )?>" />
+    </div>
+</div>
+</div>
 </form>
+</div>
+</div>
 
 
-<script>
-/**
- * Visually emphasize passed "elem" if empty
- * @param elem
- */
-function trigger_gray_out_if_empty( elem ) {
-	if( elem.val( ).replace( /\s/g, '' ) == '' ) {
-		elem.css( 'background-color', '#cecece' );
-	} else {
-		elem.css( 'background-color', '#ffffff' );
-	}
-}
-
-
-/**
- * Gray out field_value-fields without content, add event listener to gray
- * out/whiten the appropriate fields on entering a value
- */
-var fvalinp = jQuery( '#field_values_fields' ).find( 'input' )
-fvalinp.each( function( ) {
-	trigger_gray_out_if_empty( jQuery( this ) );
-});
-fvalinp.on( 'blur, keyup', function( ) {
-	trigger_gray_out_if_empty( jQuery( this ) );
-});
-
-
-/**
- * Event handler for project dropdown select, reload entire form with
- * project_id-GET-parameter
- */
-jQuery( '#project_id' ).on( 'change', function( ) {
-	window.location = window.location.protocol + '//'
-		+ window.location.host
-		+ window.location.pathname
-		+ '?page=EasyEnter/config.php&project_id=' + jQuery( this ).val( );
-});
-
-</script>
+<script type="text/javascript" src="<?php echo plugin_file( 'easyenter_config.js' ); ?>"></script>
 <?php
-html_page_bottom( );
+
+layout_page_end();
