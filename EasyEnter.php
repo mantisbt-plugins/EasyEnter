@@ -54,11 +54,9 @@ class EasyEnterPlugin extends MantisPlugin  {
 		$this->description = lang_get( 'plugin_easyenter_description' );
 		$this->page = 'config';
 
-		$this->version = '1.0';
+		$this->version = '1.1';
 		$this->requires = array(
-			'MantisCore' => '1.2.0',
-			'jQuery' => '1.9', 	# jQuery for form manipulation; plugin-link:
-								#  https://github.com/mantisbt-plugins/jquery
+			'MantisCore' => '1.3.0'		
 		);
 
 		$this->author = 'Frithjof Gnas';
@@ -87,7 +85,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 				'report_stay' => 'CHECKED',
 			),
 			# EasyEnter active for users with (including) maximum access level
-			'max_access_level' => UPDATER
+			'max_access_level' => REPORTER
 		);
 	}
 
