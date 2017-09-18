@@ -183,7 +183,10 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
     </div>
 </div></noscript>
 <!-- ENDE // NOSCRIPT-Hinweis -->
-
+<?php if(!is_writable( dirname( __DIR__  ) . '/files/easyenter_plugin_configuration.js' ) ): ?>
+    <div class="alert alert-danger" role="alert"><strong>Please adjust file permission</strong>
+        <br>File <q>easyenter_plugin_configuration.js</q> has to be writable, please adjust the file permissions!</div>
+<?php endif; ?>
 
 <div class="col-md-12 col-xs-12">
 <div class="space-10"></div>

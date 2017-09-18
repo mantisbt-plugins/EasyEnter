@@ -90,8 +90,15 @@ class EasyEnterPlugin extends MantisPlugin  {
 	}
 
 
+	function events()
+    {
+        return array(
+            'EVENT_LAYOUT_CONTENT_BEGIN' => EVENT_TYPE_OUTPUT,
+            'EVENT_LAYOUT_PAGE_FOOTER' => EVENT_TYPE_OUTPUT,
+        );
+    }
 
-	/**
+    /**
 	 * @return array
 	 */
 	function hooks( ) {
@@ -109,12 +116,10 @@ class EasyEnterPlugin extends MantisPlugin  {
 	 * @return string
 	 */
 	function show_noscript_warning( $p_event ) {
-
 		$this->set_current_project( );
 		if( !$this->plugin_requirements_fulfilled( ) ) {
 			return '';
 		}
-
 
 		return '<noscript>
 			<br>
@@ -209,13 +214,12 @@ class EasyEnterPlugin extends MantisPlugin  {
 			'field_values'=> $this->get_current_config('field_values'),
 			'max_access_level'=> $this->get_current_config('max_access_level'),
 		);
-
+		$t_easyenter_plugin_configuration = 'var easyenter_config='.json_encode($t_easyenter_config).';';
+		$t_easyenter_plugin_configuration .= "var label_selectprofile = '" . lang_get( 'select_profile' ) . "';";
+		file_put_contents( dirname(__FILE__) . '/files/easyenter_plugin_configuration.js', $t_easyenter_plugin_configuration );
 
 		$t_html = '
-			<script>
-				var easyenter_config = ' . json_encode( $t_easyenter_config ) . ';
-				var label_selectprofile = \'' . lang_get( 'select_profile' ) . '\';
-			</script>
+            <script src="' . plugin_file( 'easyenter_plugin_configuration.js' ) . '"></script>
 			<script type="text/javascript" src="'
 				. plugin_file( 'easyenter_page.js' ) . '"></script>';
 		return $t_html;
