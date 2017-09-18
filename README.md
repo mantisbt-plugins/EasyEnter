@@ -1,7 +1,7 @@
 # EasyEnter #
 
 A MantisBT plugin to make the **submission** of bugs/feature requests a little bit
-easier for less IT-skilled users (mantisbt-1.2.x only, so far).
+easier for less IT-skilled users (mantisbt-2.6.x, so far).
 
 Often there's a problem for "noob-users" to know what to do with a bugtracker.
 Even if it is really easy and there is a pictured documentation the users just
@@ -9,7 +9,7 @@ don't get it to enter their wishes/feature requests, bugs etc. into the
 bugtracker. Instead they send you dozens of mails or worse: they call you to
 tell you about an idea they just got.
 
-![Screenshot of bug report page, slimmed down](https://github.com/fg-ok/EasyEnter/blob/master/files/easy_enter_bug_report_form.png)
+![Screenshot of bug report page, slimmed down](https://github.com/fg-ok/EasyEnter/blob/mantis2beta/files/easy_enter_bug_report_form.png)
 
 Even the users goodwilled capitulate seeing a bug tracker interface the first
 time. From the thinking that any bug-report is better than nothing or doing
@@ -19,12 +19,13 @@ but the hurdle of entering bugs is lowered significantly!
 
 
 ## Requirements ##
-This plugin uses jQuery to slim down the bug report form, the prior installation
-of the jQuery-plugin (https://github.com/mantisbt-plugins/jquery) is mandatory!
+Mantis v2.6.x
 
 ## Installation ##
 Copy the folder "`EasyEnter`" in your plugin directory and open the plugin
 management in your Mantis installation. Click "Installation" and you are done.
+Make sure the file "easyenter_plugin_configuration.js" in the files folder is
+writable by the web server.
 
 ## Configuration ##
 From the start there is already a global reasonable configuration for the
@@ -39,11 +40,13 @@ management overview.
  * Fields with array-name like Multiselects, Checkbox-Collections (name="foo[]")
    are not supported correctly (take care at custom fields!)
  * Setting field_values for multiselects, many checkboxes not implemented so far
+ * Performance issue due configuration written in JS file on each bug_report-request 
 
 
 ## Next development steps: ##
- * Using a JS-library for populating form values
  * Check if Mantis' code guideline is met everywhere
+ * Write JS-configuration file only once when configuration is saved
+ * One JS-configuration file for all projects
 
 
 
