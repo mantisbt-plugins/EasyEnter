@@ -30,7 +30,9 @@ print_manage_menu( 'manage_plugin_page.php' );
 # Default value, overwritten by GET-Value or previous set session
 if( !isset( $_SESSION['selected_project_id'] ) ) {
 	$_SESSION['selected_project_id'] = 0;
-}if( isset( $_GET['project_id'] ) ) {
+}
+
+if( isset( $_GET['project_id'] ) ) {
 	$_SESSION['selected_project_id'] = (int) $_GET['project_id'];
 }
 
@@ -151,7 +153,7 @@ function print_select_available_fields( $p_name, $p_selected_fields ) {
  */
 function plugin_config_get_wpid( $p_option ) {
 	$p_project = null;
-	if( $_SESSION['selected_project_id'] == 0 ) {
+	if( $_SESSION['selected_project_id'] != 0 ) {
 		$p_project = $_SESSION['selected_project_id'];
 	}
 	return plugin_config_get( $p_option, null, null, null, $p_project );
