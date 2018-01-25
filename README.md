@@ -1,7 +1,7 @@
 # EasyEnter #
 
 A MantisBT plugin to make the **submission** of bugs/feature requests a little bit
-easier for less IT-skilled users (mantisbt-2.6.x, so far).
+easier for less IT-skilled users (mantisbt-2.10.x, so far).
 
 Often there's a problem for "noob-users" to know what to do with a bugtracker.
 Even if it is really easy and there is a pictured documentation the users just
@@ -19,7 +19,7 @@ but the hurdle of entering bugs is lowered significantly!
 
 
 ## Requirements ##
-Mantis v2.6.x
+Mantis v2.10.x
 
 ## Installation ##
 Copy the folder "`EasyEnter`" in your plugin directory and open the plugin
