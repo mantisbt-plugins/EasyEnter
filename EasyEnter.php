@@ -54,9 +54,9 @@ class EasyEnterPlugin extends MantisPlugin  {
 		$this->description = lang_get( 'plugin_easyenter_description' );
 		$this->page = 'config';
 
-		$this->version = '1.1';
+		$this->version = '1.2';
 		$this->requires = array(
-			'MantisCore' => '2.6.0',
+			'MantisCore' => '2.10.0',
 		);
 
 		$this->author = 'Frithjof Gnas';
@@ -190,7 +190,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 	 * Sets the current globally set project id to class-property
 	 */
 	function set_current_project( ) {
-		$this->project_id = (int) helper_get_current_project();;
+		$this->project_id = (int) helper_get_current_project();
 	}
 
 
