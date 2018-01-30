@@ -175,7 +175,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 
 		# access levels (defined in core/constant_in.php)
 		$t_user_id = auth_get_current_user_id( );
-		$t_user_access_level = user_get_access_level( $t_user_id );
+		$t_user_access_level = user_get_access_level( $t_user_id, $this->project_id );
 		$t_max_access_level = $this->get_current_config( 'max_access_level' );
 		if( $t_user_access_level > $t_max_access_level ) {
 			return false;
