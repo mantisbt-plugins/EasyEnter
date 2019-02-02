@@ -260,6 +260,7 @@ function issetOrDefault( $p_key, $p_array, $p_default = null ) {
 <tr>
 	<th class="category">
 		<?php echo plugin_lang_get( 'config_max_access_level' )?>
+		<br /><span class="small"><?php echo plugin_lang_get( 'config_max_access_level_helptxt' )?></span>
 	</th>
 	<td class="center">
 		<?php # Get available groups with naming via translation string (123:Grpname,456:Grp2,...)
