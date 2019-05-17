@@ -92,13 +92,15 @@ function print_select_available_fields( $p_name, $p_selected_fields ) {
 		} else {
 			$t_field_name = $g_list_fieldnames[$i];
 		}
-		if( lang_exists( $t_field_name, lang_get_current( ) ) ) {
-			$t_option = "\n\t\t\t"
-				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
-					. lang_get( $t_field_name )
-				. '</option>';
 
+		$t_field_lbl = $t_field_name;
+		if( lang_exists( $t_field_name, lang_get_current( ) ) ) {
+			$t_field_lbl = lang_get($t_field_name);
 		}
+		$t_option = "\n\t\t\t"
+				. '<option value="' . $g_list_fieldnames[$i] . '" %s>'
+				. $t_field_lbl
+				. '</option>';
 
 		$t_html .= sprintf( $t_option, $t_selected );
 	}
