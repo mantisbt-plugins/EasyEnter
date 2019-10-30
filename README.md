@@ -9,7 +9,7 @@ don't get it to enter their wishes/feature requests, bugs etc. into the
 bugtracker. Instead they send you dozens of mails or worse: they call you to
 tell you about an idea they just got.
 
-![Screenshot of bug report page, slimmed down](https://github.com/fg-ok/EasyEnter/blob/mantis2beta/files/easy_enter_bug_report_form.png)
+![Screenshot of bug report page, slimmed down](https://github.com/mantisbt-plugins/EasyEnter/blob/master/files/easy_enter_bug_report_form.png)
 
 Even the users goodwilled capitulate seeing a bug tracker interface the first
 time. From the thinking that any bug-report is better than nothing or doing
