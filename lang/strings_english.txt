@@ -37,6 +37,7 @@ $s_plugin_EasyEnter_config_exclude_specialfields = 'Special elements/fields to h
 $s_plugin_EasyEnter_config_exclude_special_profileinput = 'Expand-area where you add your own custom computer profile';
 $s_plugin_EasyEnter_config_exclude_special_asterisks = 'Asterisks marking mandatory fields';
 $s_plugin_EasyEnter_config_max_access_level = 'Active for user including level';
+$s_plugin_EasyEnter_config_max_access_level_helptxt = 'EasyEnter configuration will only show for users up to the specified access level';
 $s_plugin_EasyEnter_config_field_values = 'Preallocate field values';
 $s_plugin_EasyEnter_config_field_values_helptxt = 'To preallocate a field with a value (e.g. for excluded fields), the according values can be keyed in here. To mark single checkboxes the keyword <q>CHECKED</q> should be set. Multiselects or several checkboxes of one category are not supported so far!';
 
