@@ -40,14 +40,14 @@ $g_list_fieldnames = array(
 	'category_id', 'reproducibility', 'severity', 'priority', 'due_date', 
 	'profile_id', 'platform', 'os', 'os_build', 'handler_id', 'summary',
 	'description', 'steps_to_reproduce', 'additional_info', 'ufile[]',
-	'view_state', 'report_stay'
+	'view_state', 'report_stay', 'tag_string'
 );
 # For translation of fields where the fieldname and the corresponding language
 # .string differ to much (Key->Value; fieldname->langstring
 $g_list_fields_langstring = [
 	'category_id' => 'category', 'profile_id' => 'profile',
 	'handler_id' => 'handler', 'additional_info' => 'additional_information',
-	'ufile[]' => 'upload_file'
+	'ufile[]' => 'upload_file', 'tag_string' => 'tags'
 ];
 
 # For Noscript-warning; background-color
