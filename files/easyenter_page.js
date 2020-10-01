@@ -60,7 +60,6 @@ function populate_field_values( ) {
 		if( thisInputfield.attr( 'type' ) === 'checkbox' ) {
 			if ( 'CHECKED' === easyenter_config.field_values[ field_name ] ) {
 				thisInputfield.attr('checked', 'checked');
-				console.log(field_name)
 				continue;
 			}
 		}
