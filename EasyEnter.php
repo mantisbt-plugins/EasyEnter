@@ -128,11 +128,17 @@ class EasyEnterPlugin extends MantisPlugin  {
 				<strong>' . plugin_lang_get( 'noscriptwarning' ) . '</strong>
 			</td></tr></tbody></table>
 			<br>
-		</noscript>
-		<script>document.write(\'<div class="powered_easyenter" '
-			. 'style="text-align:right;font-style:italic;">powered by '
-			. 'EasyEnter</div>\')</script>
-		';
+		</noscript>';
+
+		// These lines has to be commented out so that the "report_stay"
+		// checkbox will work. I think that somehow these lines
+		// of inline code on the page make the javascript break or
+		// stop or something ...
+		// The lines are:
+		// <script>document.write(\'<div class="powered_easyenter" '
+		// 	. 'style="text-align:right;font-style:italic;">powered by '
+		// 	. 'EasyEnter</div>\')</script>
+		// ';
 	}
 
 
