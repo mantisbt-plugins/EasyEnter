@@ -19,6 +19,7 @@
 /*
  * Function calls, plugin execution
  */
+var CURRENT_PROJECT_ID = $( '#easyenter-helper_current_project_id' ).data( 'current_project_id' );
 populate_field_values( );
 hide_all_fields_show_include_fields( );
 
@@ -34,9 +35,13 @@ hide_all_fields_show_include_fields( );
  * TODO: Implemet jQuery-populate-plugin
  */
 function populate_field_values( ) {
-	if( !easyenter_config.hasOwnProperty( 'field_values' ) ) {
+    if( !easyenter_config.hasOwnProperty( CURRENT_PROJECT_ID ) ) {
+		CURRENT_PROJECT_ID = 0;
+    }
+	if( !easyenter_config[ CURRENT_PROJECT_ID ].hasOwnProperty( 'field_values' ) ) {
 		return;
 	}
+	easyenter_config = easyenter_config[ CURRENT_PROJECT_ID ];
 	for( field_name in easyenter_config.field_values ) {
 		var thisInputfield = jQuery( '[name="' + field_name + '"]' );
 		if( thisInputfield.length < 1 ) {

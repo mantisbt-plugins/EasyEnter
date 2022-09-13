@@ -56,7 +56,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 
 		$this->version = '1.2';
 		$this->requires = array(
-			'MantisCore' => '2.6.0',
+			'MantisCore' => '2.10.0',
 		);
 
 		$this->author = 'Frithjof Gnas';
@@ -190,7 +190,7 @@ class EasyEnterPlugin extends MantisPlugin  {
 	 * Sets the current globally set project id to class-property
 	 */
 	function set_current_project( ) {
-		$this->project_id = (int) helper_get_current_project();;
+		$this->project_id = (int) helper_get_current_project();
 	}
 
 
@@ -204,22 +204,16 @@ class EasyEnterPlugin extends MantisPlugin  {
 		return plugin_config_get( $p_key, null, null, null, $this->project_id );
 	}
 
-
-
+	/**
+     * Include JS Snippets with EasyEnter-config and corresponding script to apply it
+     * @return string
+	 */
 	function jquery_rebuild_bug_report_page()
 	{
-		$t_easyenter_config = array(
-			'include_fields'=> $this->get_current_config('include_fields'),
-			'exclude_fields'=> $this->get_current_config('exclude_fields'),
-			'field_values'=> $this->get_current_config('field_values'),
-			'max_access_level'=> $this->get_current_config('max_access_level'),
-		);
-		$t_easyenter_plugin_configuration = 'var easyenter_config='.json_encode($t_easyenter_config).';';
-		$t_easyenter_plugin_configuration .= "var label_selectprofile = '" . lang_get( 'select_profile' ) . "';";
-		file_put_contents( dirname(__FILE__) . '/files/easyenter_plugin_configuration.js', $t_easyenter_plugin_configuration );
-
+		$t_modified = filemtime( plugin_file_path( 'easyenter_plugin_configuration.js', plugin_get_current() ) );
 		$t_html = '
-            <script src="' . plugin_file( 'easyenter_plugin_configuration.js' ) . '"></script>
+			<span id="easyenter-helper_current_project_id" data-current_project_id="' . (int) $this->project_id . '"></span>
+            <script src="' . plugin_file( 'easyenter_plugin_configuration.js' ) . '&amp;' . $t_modified . '"></script>
 			<script type="text/javascript" src="'
 				. plugin_file( 'easyenter_page.js' ) . '"></script>';
 		return $t_html;
