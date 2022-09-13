@@ -37,6 +37,7 @@ $s_plugin_EasyEnter_config_exclude_specialfields = 'Spezielle auszublendende Ele
 $s_plugin_EasyEnter_config_exclude_special_profileinput = 'Aufklapp-Bereich zum Eingeben eines Rechnerprofiles';
 $s_plugin_EasyEnter_config_exclude_special_asterisks = 'Pflichtfeld-Sternchen';
 $s_plugin_EasyEnter_config_max_access_level = 'Aktiv für Benutzer bis einschließlich';
+$s_plugin_EasyEnter_config_max_access_level_helptxt = 'EasyEnter-Konfiguration gilt nur für Benutzer bis zur angegebenen Zugriffsberechtigung';
 $s_plugin_EasyEnter_config_field_values = 'Feldwerte vorbelegen';
 $s_plugin_EasyEnter_config_field_values_helptxt = 'Um ein Feld mit einem Wert vorzubelegen, können hier entspr. Werte für die Felder eingefügt werden. Für Checkboxen muss das Schlüsselwort <q>CHECKED</q> gesetzt werden, um diese anzuhaken. Multiselects sowie mehrere Checkboxen einer Kategorie werden bisher nicht unterstützt!';
 
