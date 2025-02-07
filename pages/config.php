@@ -116,6 +116,11 @@ function print_select_available_fields( $p_name, $p_selected_fields ) {
 	foreach( $t_custom_fields as $t_field_id ) {
 		$t_selected = '';
 		$t_field_name = 'custom_field_' . $t_field_id;
+
+        if( custom_field_get_field( $t_field_id, 'type' ) == CUSTOM_FIELD_TYPE_DATE ){
+                  $t_field_name .= '_year';
+        }
+
 		if( in_array( $t_field_name, $p_selected_fields ) ) {
 			$t_selected = ' selected="selected" ';
 		}
